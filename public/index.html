@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <p class="title">Login</p>
+      <section class="form">
+        <div class="input-group">
+          <label for="Email">Email</label>
+          <input type="email" name="username" id="email" placeholder="" />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" placeholder="" />
+          <div class="forgot">
+            <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
+          </div>
+        </div>
+        <button class="sign" onclick="signIn()" style="cursor: pointer">
+          Sign in
+        </button>
+      </section>
+      <div class="social-message">
+        <div class="line"></div>
+        <p class="message">Login with social accounts</p>
+        <div class="line"></div>
+      </div>
+      <div class="social-icons">
+        <button
+          aria-label="Log in with Google"
+          class="icon"
+          onclick="withGoogle()"
+          style="cursor: pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            class="w-5 h-5 fill-current"
+          >
+            <path
+              d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <p class="signup">
+        Don't have an account?
+        <a rel="noopener noreferrer" href="signup.html" class="">Sign up</a>
+      </p>
+    </div>
+    <div id="show"></div>
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
+      import {
+        getAuth,
+        signInWithPopup,
+        GoogleAuthProvider,
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+      } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyA7lbr26l7zIL1dKr017SzmtzmkUJF9BqQ',
+        authDomain: 'project-b4e69.firebaseapp.com',
+        projectId: 'project-b4e69',
+        storageBucket: 'project-b4e69.appspot.com',
+        messagingSenderId: '962897759005',
+        appId: '1:962897759005:web:a29efeed141c939c63aff4',
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+      const provide = new TwitterAuthProvider();
+      const providers = new GithubAuthProvider();
+
+      const withGoogle = () => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+            console.log(user);
+            window.location.href = 'dashboard.html';
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(errorCode, errorMessage, email, credential);
+            // ...
+          });
+      };
+
+      window.withGoogle = withGoogle;
+      window.signIn = signIn;
+    </script>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>

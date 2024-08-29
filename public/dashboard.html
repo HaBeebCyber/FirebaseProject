@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      body {
+        background-color: #f7f9fc;
+        font-family: 'Arial', sans-serif;
+      }
+
+      .welcome-container {
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        color: #007bff;
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #666;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      img {
+        border-radius: 50%;
+        border: 2px solid #007bff;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-top: 20px;
+      }
+
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="welcome-container">
+      <h1>Welcome to Your Dashboard</h1>
+      <div id="show"></div>
+    </div>
+
+    <footer>&copy; 2024 H4B33bCyb3r</footer>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyA7lbr26l7zIL1dKr017SzmtzmkUJF9BqQ',
+        authDomain: 'project-b4e69.firebaseapp.com',
+        projectId: 'project-b4e69',
+        storageBucket: 'project-b4e69.appspot.com',
+        messagingSenderId: '962897759005',
+        appId: '1:962897759005:web:a29efeed141c939c63aff4',
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          let theirName = user.displayName;
+          let email = user.email;
+          let pic = user.photoURL;
+
+          show.innerHTML = `
+            <h3>Welcome, ${theirName}</h3>
+            <p>Your email is: ${email}</p>
+            <img src="${pic}" alt="Profile pic" />
+          `;
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
+    </script>
+  </body>
+</html>
